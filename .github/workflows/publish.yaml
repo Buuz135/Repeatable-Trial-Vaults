@@ -50,7 +50,7 @@ jobs:
           modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
           files: |
             neoforge/build/libs/!(*-@(javadoc|sources)).jar
-            neoforge/build/libs/!(*-@(javadoc|sources)).jar
+            neoforge/build/libs/*-@(javadoc|sources).jar
           version-type: beta
           loaders: neoforge
           game-versions: 1.21
