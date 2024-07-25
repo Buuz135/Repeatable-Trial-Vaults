@@ -16,7 +16,10 @@
     "environment": "*",
     "entrypoints": {
         "main": [
-            "com.example.examplemod.ExampleMod"
+            "com.buuz135.repeatabletrialvaults.RTVMod"
+        ],
+        "client": [
+            "com.buuz135.repeatabletrialvaults.RTVClientMod"
         ]
     },
     "mixins": [

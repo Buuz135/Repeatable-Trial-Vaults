@@ -1,0 +1,59 @@
+name: Publish action
+
+on:
+  create:
+    tag:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v2
+      - name: validate gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+      - name: setup jdk 21
+        uses: actions/setup-java@v1
+        with:
+          java-version: "21"
+      - name: make gradle wrapper executable
+        if: ${{ runner.os != 'Windows' }}
+        run: chmod +x ./gradlew
+      - name: build
+        run: ./gradlew build
+      - name: Publish Minecraft Mods Fabric
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          curseforge-id: 1070541
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          modrinth-id: 5RO5CdUY
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: |
+            fabric/build/libs/!(*-@(javadoc|sources)).jar
+            fabric/build/libs/*-@(javadoc|sources).jar
+          version-type: beta
+          loaders: |
+            fabric
+            quilt
+          game-versions: 1.21
+          java: 21
+          name: ""
+          changelog: "https://github.com/Buuz135/Repeatable-Trial-Vaults/commits/1.21/"
+      - name: Publish Minecraft Mods NeoForge
+        uses: Kir-Antipov/mc-publish@v3.3.0
+        with:
+          curseforge-id: 1070541
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          modrinth-id: 5RO5CdUY
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          files: |
+            neoforge/build/libs/!(*-@(javadoc|sources)).jar
+            neoforge/build/libs/!(*-@(javadoc|sources)).jar
+          version-type: beta
+          loaders: neoforge
+          game-versions: 1.21
+          java: 21
+          name: ""
+          changelog: "https://github.com/Buuz135/Repeatable-Trial-Vaults/commits/1.21/"
