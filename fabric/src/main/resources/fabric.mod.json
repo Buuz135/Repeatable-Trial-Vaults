@@ -26,6 +26,7 @@
         "${mod_id}.mixins.json",
         "${mod_id}.fabric.mixins.json"
     ],
+    "accessWidener": "repeatable_trial_vaults.accesswidener",
     "depends": {
         "fabricloader": ">=${fabric_loader_version}",
         "fabric-api": "*",
