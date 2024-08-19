@@ -37,7 +37,9 @@ jobs:
           loaders: |
             fabric
             quilt
-          game-versions: 1.21
+          game-versions: |
+            1.21
+            1.21.1
           java: 21
           name: ""
           changelog: "https://github.com/Buuz135/Repeatable-Trial-Vaults/commits/1.21/"
@@ -53,7 +55,9 @@ jobs:
             neoforge/build/libs/*-@(javadoc|sources).jar
           version-type: beta
           loaders: neoforge
-          game-versions: 1.21
+          game-versions: |
+            1.21
+            1.21.1
           java: 21
           name: ""
           changelog: "https://github.com/Buuz135/Repeatable-Trial-Vaults/commits/1.21/"
