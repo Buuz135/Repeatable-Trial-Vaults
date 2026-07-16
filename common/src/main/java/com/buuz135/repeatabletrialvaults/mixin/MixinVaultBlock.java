@@ -5,7 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -23,14 +23,14 @@ public class MixinVaultBlock {
 
 
     @Inject(at = @At("HEAD"), method = "useItemOn", cancellable = true)
-    private void useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<ItemInteractionResult> cir) {
+    private void useItemOn(ItemStack stack, BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (level instanceof ServerLevel && level.getBlockEntity(pos) instanceof VaultBlockEntity vaultblockentity) {
             if (stack.is(Constants.CAN_RESET_TRIAL_VAULTS) && vaultblockentity.getServerData().hasRewardedPlayer(player)){
                 player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
                 stack.consume(vaultblockentity.getConfig().keyItem().getCount(), player);
                 vaultblockentity.getServerData().rewardedPlayers.remove(player.getUUID());
                 vaultblockentity.getServerData().markChanged();
-                cir.setReturnValue(ItemInteractionResult.SUCCESS);
+                cir.setReturnValue(InteractionResult.SUCCESS_SERVER);
             }
         }
     }

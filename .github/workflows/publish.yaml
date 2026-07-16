@@ -14,17 +14,18 @@ jobs:
         uses: actions/checkout@v2
       - name: validate gradle wrapper
         uses: gradle/wrapper-validation-action@v1
-      - name: setup jdk 21
-        uses: actions/setup-java@v1
+      - name: setup jdk 25
+        uses: actions/setup-java@v4
         with:
-          java-version: "21"
+          java-version: "25"
+          distribution: temurin
       - name: make gradle wrapper executable
         if: ${{ runner.os != 'Windows' }}
         run: chmod +x ./gradlew
       - name: build
         run: ./gradlew build
       - name: Publish Minecraft Mods Fabric
-        uses: Kir-Antipov/mc-publish@v3.3.0
+        uses: Kir-Antipov/mc-publish@v3.3.1
         with:
           curseforge-id: 1070541
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -34,17 +35,17 @@ jobs:
             fabric/build/libs/!(*-@(javadoc|sources)).jar
             fabric/build/libs/*-@(javadoc|sources).jar
           version-type: beta
+          environment: client? | server
           loaders: |
             fabric
             quilt
           game-versions: |
-            1.21
-            1.21.1
-          java: 21
+            26.1.2
+          java: 25
           name: ""
-          changelog: "https://github.com/Buuz135/Repeatable-Trial-Vaults/commits/1.21/"
+          changelog: "https://github.com/Buuz135/Repeatable-Trial-Vaults/commits/26.1.2/"
       - name: Publish Minecraft Mods NeoForge
-        uses: Kir-Antipov/mc-publish@v3.3.0
+        uses: Kir-Antipov/mc-publish@v3.3.1
         with:
           curseforge-id: 1070541
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
@@ -55,9 +56,9 @@ jobs:
             neoforge/build/libs/*-@(javadoc|sources).jar
           version-type: beta
           loaders: neoforge
+          environment: client? | server
           game-versions: |
-            1.21
-            1.21.1
-          java: 21
+            26.1.2
+          java: 25
           name: ""
-          changelog: "https://github.com/Buuz135/Repeatable-Trial-Vaults/commits/1.21/"
+          changelog: "https://github.com/Buuz135/Repeatable-Trial-Vaults/commits/26.1.2/"
